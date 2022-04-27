@@ -92,3 +92,7 @@ penguins |>
             ) 
 ```
 
+New Page {data-navmenu="Pages"}
+========================================================================
+
+This is a placeholder. 
