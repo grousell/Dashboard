@@ -1,0 +1,71 @@
+---
+title: "Advanced Dashboarding"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    social: ["menu"]
+    source_code: embed
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(palmerpenguins)
+library(plotly)
+library(DT)
+library(fontawesome)
+data ("penguins")
+
+```
+
+Plot 
+======================================================================
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Scatterplot of Penguin Bill Length vs Bill Depth
+
+```{r}
+splot <- penguins |> 
+  ggplot (aes (x = bill_length_mm, y = bill_depth_mm, color = species)) + 
+  geom_point()
+
+ggplotly(splot)
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Boxplot of Body Mass
+
+```{r}
+penguins |> 
+  ggplot (aes(x = body_mass_g, y = sex, fill = sex)) + 
+  geom_boxplot()
+```
+
+### Histogram of Flipper Length
+
+```{r}
+penguins |> 
+  ggplot (aes(x = flipper_length_mm, fill = species)) + 
+  geom_histogram() + 
+  facet_wrap(~species)
+```
+
+Data 
+========================================================================
+
+```{r}
+penguins |> 
+  datatable(extensions = "Buttons", 
+            # each letter Blfrtip associated with piece of table, B = buttons, 
+            # p = pagination, l = length t = table. if delete a letter removes from table. 
+            options = list (dom = "Blfrtip",
+                            buttons = c("copy", "csv", "excel", "pdf", "print")
+                            )
+            ) 
+```
+
