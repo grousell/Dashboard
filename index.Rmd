@@ -2,13 +2,20 @@
 title: "Advanced Dashboarding"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
+    orientation: row
     vertical_layout: fill
     social: ["menu"]
     source_code: embed
+    theme: 
+      version: 4
+      bootswatch: sandstone
 ---
 
+<!-- see also bootswatch for themes -->
+
 ```{r setup, include=FALSE}
+# From: https://www.youtube.com/watch?v=Opa_Nf88mCU
+
 library(flexdashboard)
 library(tidyverse)
 library(palmerpenguins)
@@ -19,10 +26,26 @@ data ("penguins")
 
 ```
 
-Plot 
+Plot {data-navmenu="Pages"}
 ======================================================================
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+### Penguin Stats
 
-Column {data-width=650}
+There are `r nrow(penguins)` observations in the dataset.  
+
+Row 
+-----------------------------------------------------------------------
+### Number of Penguins
+
+```{r}
+# fontawesome has thousands of free icons
+valueBox(nrow(penguins), icon = "fa-linux")
+
+```
+
+
+Row {.tabset}
 -----------------------------------------------------------------------
 
 ### Scatterplot of Penguin Bill Length vs Bill Depth
@@ -35,8 +58,6 @@ splot <- penguins |>
 ggplotly(splot)
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
 
 ### Boxplot of Body Mass
 
@@ -46,6 +67,8 @@ penguins |>
   geom_boxplot()
 ```
 
+Row 
+------------------------------------------------------------------------
 ### Histogram of Flipper Length
 
 ```{r}
@@ -55,7 +78,7 @@ penguins |>
   facet_wrap(~species)
 ```
 
-Data 
+Data {data-navmenu="Pages"}
 ========================================================================
 
 ```{r}
